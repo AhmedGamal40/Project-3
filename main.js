@@ -33,14 +33,10 @@ switch (dayName) {
 
 // Get time in UTC
 const utcHours = today.getUTCHours();
-const utcMinutes = today.getUTCMinutes();
-const utcSeconds = today.getUTCSeconds();
 
 // Calculate Cairo time by adding the time zone offset
 const egyptOffset = 2; // UTC +2 for Cairo
 const egyptHours = utcHours + egyptOffset;
-const egyptMinutes = utcMinutes;
-const egyptSeconds = utcSeconds;
 
 // Convert Cairo time to 12-hour format
 const isPM = egyptHours >= 12;
@@ -50,5 +46,18 @@ const ampm = isPM ? "PM" : "AM";
 // Update elements with Cairo time
 document.querySelector('#hours').textContent = `${hours}`;
 document.querySelector('#hour-time').textContent = `${ampm}`;
-document.querySelector('#minutes').textContent = egyptMinutes;
-document.getElementById('seconds').textContent = egyptSeconds;
+
+function counter() {
+  var seconds = today.getSeconds();
+  var minutes = today.getMinutes();
+  setInterval(function() {
+    seconds++;
+    if (seconds >= 60) {
+      seconds = 1;
+      minutes++;
+    }
+    document.getElementById("seconds").innerHTML =  seconds;
+    document.querySelector('#minutes').textContent = minutes;
+  }, 1000);
+}
+window.onload = counter;
